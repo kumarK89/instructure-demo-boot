@@ -28,7 +28,17 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     public UserDto getUserSurveyDetails(int userId) {
-        return getUserDtoFromListOfRecords(userSurveyDao.getAssignedSurveysForUser(userId));
+        UserDto userDto = null;
+        List<Record6<Integer, String, Integer,
+                String, Date, Date>> result = userSurveyDao.getAssignedSurveysForUser(userId);
+        if (!result.isEmpty()) {
+            ModelMapper modelMapper = ModelMapperUtil.MODEL_MAPPER;
+            userDto = modelMapper.map(result.get(0), UserDto.class);
+            userDto.setSurveyDtos(result.stream()
+                    .map(record -> getSurveyDto(record, modelMapper))
+                    .collect(Collectors.toList()));
+        }
+        return userDto;
     }
 
     @Override
@@ -64,7 +74,9 @@ public class UserSurveyServiceImpl implements UserSurveyService {
             SurveyQuestionsDto surveyQuestionsDto = null;
             List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = null;
             for (Record5<String, Integer, Integer, String, Boolean> record : surveyQtnLst) {
-                if (indx == 0 || !record.value2().equals(surveyQuestionsDto.getSrvyQtnId())) {
+                if (indx == 0 ||
+                        (surveyQuestionsDto != null &&
+                                !record.value2().equals(surveyQuestionsDto.getSrvyQtnId()))) {
                     surveyQuestionsDto = new SurveyQuestionsDto();
                     surveyQuestionsDto.setQtnTxt(record.value1());
                     surveyQuestionsDto.setSrvyQtnId(record.value2());
@@ -88,19 +100,6 @@ public class UserSurveyServiceImpl implements UserSurveyService {
         surveyQuestionOptionsDto.setOptText(record.value4());
         surveyQuestionOptionsDto.setOptionSelected(record.value5());
         return surveyQuestionOptionsDto;
-    }
-
-    private UserDto getUserDtoFromListOfRecords(List<Record6<Integer, String, Integer,
-            String, Date, Date>> result) {
-        UserDto userDto = null;
-        if (!result.isEmpty()) {
-            ModelMapper modelMapper = ModelMapperUtil.MODEL_MAPPER;
-            userDto = modelMapper.map(result.get(0), UserDto.class);
-            userDto.setSurveyDtos(result.stream()
-                    .map(record -> getSurveyDto(record, modelMapper))
-                    .collect(Collectors.toList()));
-        }
-        return userDto;
     }
 
     private SurveyDto getSurveyDto(Record record, ModelMapper modelMapper) {
