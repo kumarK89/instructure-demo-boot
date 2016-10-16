@@ -10,8 +10,9 @@ public class ReplaceNull {
     }
 
     public static <T> List<T> withEmptyList(List<T> input) {
+        Collections.emptyList();
         if (input == null) {
-            input = Collections.emptyList();
+            return Collections.emptyList();
         }
         return input;
     }

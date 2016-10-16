@@ -7,6 +7,7 @@ import com.instructure.dto.SurveyQuestionOptionsDto;
 import com.instructure.dto.SurveyQuestionsDto;
 import com.instructure.dto.UserDto;
 import com.instructure.utils.ModelMapperUtil;
+import com.instructure.utils.ReplaceNull;
 
 import org.jooq.Record;
 import org.jooq.Record5;
@@ -85,6 +86,8 @@ public class UserSurveyServiceImpl implements UserSurveyService {
                     surveyQuestionsDto.setSurveyQuestionOptionsDtos(surveyQuestionOptionsDtos);
                     surveyQuestionsDtos.add(surveyQuestionsDto);
                 } else {
+                    surveyQuestionOptionsDtos = ReplaceNull
+                            .withEmptyList(surveyQuestionOptionsDtos);
                     surveyQuestionOptionsDtos.add(setSurveyQuestionOptionsDto(record));
                 }
                 indx++;
