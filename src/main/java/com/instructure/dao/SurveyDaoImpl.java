@@ -1,14 +1,14 @@
 package com.instructure.dao;
 
-import com.instructure.db.tables.records.InstrSrvyQtnOptsRecord;
-import com.instructure.db.tables.records.InstrSrvyQtnsRecord;
-
 import org.jooq.DSLContext;
 
 import java.util.List;
 
-import static com.instructure.db.tables.InstrSrvyQtnOpts.INSTR_SRVY_QTN_OPTS;
-import static com.instructure.db.tables.InstrSrvyQtns.INSTR_SRVY_QTNS;
+import jooq.codgen.tables.records.InstrSrvyQtnOptsRecord;
+import jooq.codgen.tables.records.InstrSrvyQtnsRecord;
+
+import static jooq.codgen.tables.InstrSrvyQtnOpts.INSTR_SRVY_QTN_OPTS;
+import static jooq.codgen.tables.InstrSrvyQtns.INSTR_SRVY_QTNS;
 
 public class SurveyDaoImpl implements SurveyDao {
 

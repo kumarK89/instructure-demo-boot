@@ -1,9 +1,10 @@
 package com.instructure.dao;
 
-import com.instructure.db.tables.records.InstrSrvyQtnOptsRecord;
-import com.instructure.db.tables.records.InstrSrvyQtnsRecord;
 
 import java.util.List;
+
+import jooq.codgen.tables.records.InstrSrvyQtnOptsRecord;
+import jooq.codgen.tables.records.InstrSrvyQtnsRecord;
 
 public interface SurveyDao {
 

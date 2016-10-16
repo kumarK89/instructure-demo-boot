@@ -50,7 +50,7 @@ task generate << {
                 deprecated('false')
             }
             target() {
-                packageName('com.instructure.db')
+                packageName('jooq.codgen')
                 directory('src/main/java')
             }
         }

@@ -1,16 +1,15 @@
 package com.instructure.service;
 
 import com.instructure.dao.SurveyDao;
-import com.instructure.db.tables.records.InstrSrvyQtnOptsRecord;
-import com.instructure.db.tables.records.InstrSrvyQtnsRecord;
 import com.instructure.dto.SurveyQuestionOptionsDto;
 import com.instructure.dto.SurveyQuestionsDto;
 import com.instructure.utils.ModelMapperUtil;
 
-import org.springframework.util.CollectionUtils;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import jooq.codgen.tables.records.InstrSrvyQtnOptsRecord;
+import jooq.codgen.tables.records.InstrSrvyQtnsRecord;
 
 public class SurveyServiceImpl implements SurveyService {
 

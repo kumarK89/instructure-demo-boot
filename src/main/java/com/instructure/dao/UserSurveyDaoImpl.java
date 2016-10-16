@@ -1,14 +1,5 @@
 package com.instructure.dao;
 
-import com.instructure.db.tables.InstrSrvyDtls;
-import com.instructure.db.tables.InstrSrvyQtnOpts;
-import com.instructure.db.tables.InstrSrvyQtns;
-import com.instructure.db.tables.InstrUsrDtls;
-import com.instructure.db.tables.InstrUsrSrvyMpng;
-import com.instructure.db.tables.InstrUsrSrvyQtnOpt;
-import com.instructure.db.tables.records.InstrUsrSrvyMpngRecord;
-import com.instructure.db.tables.records.InstrUsrSrvyQtnOptRecord;
-
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record1;
@@ -19,14 +10,22 @@ import org.jooq.impl.DSL;
 import java.sql.Date;
 import java.util.List;
 
-import static com.instructure.db.Sequences.INSTR_USR_SRVY_QTN_OPT_SEQ;
-import static com.instructure.db.tables.InstrSrvyDtls.INSTR_SRVY_DTLS;
-import static com.instructure.db.tables.InstrSrvyQtnOpts.INSTR_SRVY_QTN_OPTS;
-import static com.instructure.db.tables.InstrSrvyQtns.INSTR_SRVY_QTNS;
-import static com.instructure.db.tables.InstrUsrDtls.INSTR_USR_DTLS;
-import static com.instructure.db.tables.InstrUsrSrvyMpng.INSTR_USR_SRVY_MPNG;
-import static com.instructure.db.tables.InstrUsrSrvyQtnOpt.INSTR_USR_SRVY_QTN_OPT;
+import jooq.codgen.tables.InstrSrvyDtls;
+import jooq.codgen.tables.InstrSrvyQtnOpts;
+import jooq.codgen.tables.InstrSrvyQtns;
+import jooq.codgen.tables.InstrUsrDtls;
+import jooq.codgen.tables.InstrUsrSrvyMpng;
+import jooq.codgen.tables.InstrUsrSrvyQtnOpt;
+import jooq.codgen.tables.records.InstrUsrSrvyMpngRecord;
+import jooq.codgen.tables.records.InstrUsrSrvyQtnOptRecord;
 
+import static jooq.codgen.Sequences.INSTR_USR_SRVY_QTN_OPT_SEQ;
+import static jooq.codgen.tables.InstrSrvyDtls.INSTR_SRVY_DTLS;
+import static jooq.codgen.tables.InstrSrvyQtnOpts.INSTR_SRVY_QTN_OPTS;
+import static jooq.codgen.tables.InstrSrvyQtns.INSTR_SRVY_QTNS;
+import static jooq.codgen.tables.InstrUsrDtls.INSTR_USR_DTLS;
+import static jooq.codgen.tables.InstrUsrSrvyMpng.INSTR_USR_SRVY_MPNG;
+import static jooq.codgen.tables.InstrUsrSrvyQtnOpt.INSTR_USR_SRVY_QTN_OPT;
 
 public class UserSurveyDaoImpl implements UserSurveyDao {
 
@@ -46,8 +45,8 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
                 srvy.SRVY_ID, srvy.SRVY_NAME, srvy.SRVY_STRT_DT, srvy.SRVY_END_DT)
                 .from(usr, srvy, mpng)
                 .where(mpng.USR_ID.equal(usr.USER_ID))
-                        .and(mpng.SRVY_ID.equal(srvy.SRVY_ID))
-                        .and(usr.USER_ID.equal(DSL.inline(userId))).fetch();
+                .and(mpng.SRVY_ID.equal(srvy.SRVY_ID))
+                .and(usr.USER_ID.equal(DSL.inline(userId))).fetch();
     }
 
     @Override

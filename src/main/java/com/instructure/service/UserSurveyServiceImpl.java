@@ -1,7 +1,6 @@
 package com.instructure.service;
 
 import com.instructure.dao.UserSurveyDao;
-import com.instructure.db.tables.records.InstrUsrSrvyQtnOptRecord;
 import com.instructure.dto.SurveyDto;
 import com.instructure.dto.SurveyQuestionOptionsDto;
 import com.instructure.dto.SurveyQuestionsDto;
@@ -18,6 +17,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import jooq.codgen.tables.records.InstrUsrSrvyQtnOptRecord;
 
 public class UserSurveyServiceImpl implements UserSurveyService {
 

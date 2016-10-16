@@ -5,6 +5,7 @@ import com.instructure.service.SurveyService;
 import com.instructure.utils.ReplaceNull;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "survey")
+@CrossOrigin(origins = "http://localhost:9000")
 public class SurveyController {
 
     private final SurveyService surveyService;
