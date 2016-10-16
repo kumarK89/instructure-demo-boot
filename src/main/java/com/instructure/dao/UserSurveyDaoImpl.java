@@ -51,15 +51,18 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
 
     @Override
     public void submitSurvey(List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords) {
-        dsl.transaction(t -> {
-            usrSrvyQtnOptRecords.forEach(usrSrvyQtnOptRecord -> {
-                Record1<Long> seqVal = dsl.select(INSTR_USR_SRVY_QTN_OPT_SEQ.nextval()).fetchOne();
-                dsl.insertInto(INSTR_USR_SRVY_QTN_OPT, INSTR_USR_SRVY_QTN_OPT.USR_SRVY_QTN_OPT_ID,
-                        INSTR_USR_SRVY_QTN_OPT.SRVY_QTN_ID, INSTR_USR_SRVY_QTN_OPT.SRVY_QTN_OPT_ID)
-                        .values(seqVal.value1().intValue(), usrSrvyQtnOptRecord.getSrvyQtnId()
-                                , usrSrvyQtnOptRecord.getUsrSrvyQtnOptId()).execute();
-            });
-        });
+        dsl.transaction(t ->
+                usrSrvyQtnOptRecords.forEach(usrSrvyQtnOptRecord -> {
+                    Record1<Long> seqVal = dsl.select(INSTR_USR_SRVY_QTN_OPT_SEQ
+                            .nextval()).fetchOne();
+                    dsl.insertInto(INSTR_USR_SRVY_QTN_OPT,
+                            INSTR_USR_SRVY_QTN_OPT.USR_SRVY_QTN_OPT_ID,
+                            INSTR_USR_SRVY_QTN_OPT.SRVY_QTN_ID,
+                            INSTR_USR_SRVY_QTN_OPT.SRVY_QTN_OPT_ID)
+                            .values(seqVal.value1().intValue(), usrSrvyQtnOptRecord.getSrvyQtnId()
+                                    , usrSrvyQtnOptRecord.getUsrSrvyQtnOptId()).execute();
+                })
+        );
     }
 
     @Override
