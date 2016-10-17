@@ -1,10 +1,10 @@
 package com.instructure.service;
 
 import com.instructure.dao.UserSurveyDao;
-import com.instructure.dto.SurveyDto;
-import com.instructure.dto.SurveyQuestionOptionsDto;
-import com.instructure.dto.SurveyQuestionsDto;
-import com.instructure.dto.UserDto;
+import com.instructure.service.dto.SurveyDto;
+import com.instructure.service.dto.SurveyQuestionOptionsDto;
+import com.instructure.service.dto.SurveyQuestionsDto;
+import com.instructure.service.dto.UserDto;
 import com.instructure.utils.ModelMapperUtil;
 import com.instructure.utils.ReplaceNull;
 

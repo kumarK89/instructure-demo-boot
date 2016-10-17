@@ -1,4 +1,4 @@
-package com.instructure.exception;
+package com.instructure.dao.exception;
 
 import org.jooq.ExecuteContext;
 import org.jooq.SQLDialect;

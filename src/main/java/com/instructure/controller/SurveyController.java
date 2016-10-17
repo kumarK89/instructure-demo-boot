@@ -1,6 +1,6 @@
 package com.instructure.controller;
 
-import com.instructure.dto.SurveyQuestionsDto;
+import com.instructure.service.dto.SurveyQuestionsDto;
 import com.instructure.service.SurveyService;
 import com.instructure.utils.ReplaceNull;
 

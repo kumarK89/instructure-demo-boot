@@ -1,7 +1,7 @@
 package com.instructure.controller;
 
-import com.instructure.dto.SurveyQuestionsDto;
-import com.instructure.dto.UserDto;
+import com.instructure.service.dto.SurveyQuestionsDto;
+import com.instructure.service.dto.UserDto;
 import com.instructure.service.UserSurveyService;
 
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package com.instructure.config;
 
-import com.instructure.exception.ExceptionTranslator;
+import com.instructure.dao.exception.ExceptionTranslator;
 import com.instructure.transaction.JooqSpringTransactionProvider;
 
 import org.jooq.ConnectionProvider;

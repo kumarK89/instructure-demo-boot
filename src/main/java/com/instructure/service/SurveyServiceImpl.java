@@ -1,8 +1,8 @@
 package com.instructure.service;
 
 import com.instructure.dao.SurveyDao;
-import com.instructure.dto.SurveyQuestionOptionsDto;
-import com.instructure.dto.SurveyQuestionsDto;
+import com.instructure.service.dto.SurveyQuestionOptionsDto;
+import com.instructure.service.dto.SurveyQuestionsDto;
 import com.instructure.utils.ModelMapperUtil;
 
 import java.util.List;

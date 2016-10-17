@@ -1,4 +1,4 @@
-package com.instructure.dto;
+package com.instructure.service.dto;
 
 import java.util.List;
 

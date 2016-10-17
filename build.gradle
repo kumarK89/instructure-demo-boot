@@ -77,7 +77,7 @@ sonarqube {
         property "sonar.projectName", "Instructure-Demo-Boot-Coverage"
         property "sonar.projectKey", "Instructure-Demo-Boots"
         property "sonar.projectVersion", "1.0"
-        property "sonar.sources", "./src/main/java"
+        property "sonar.host.url", "http://localhost:9000"
         property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
         property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/jacoco-it.exec"
     }
@@ -86,7 +86,7 @@ sonarqube {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-jooq')
-	compile('org.jooq:jooq-meta')
+    compile('org.jooq:jooq-meta')
     compile('org.jooq:jooq-codegen')
     compile('org.modelmapper.extensions:modelmapper-jooq:0.7.7')
     runtime('org.postgresql:postgresql')

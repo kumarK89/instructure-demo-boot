@@ -1,4 +1,4 @@
-package com.instructure.dto;
+package com.instructure.service.dto;
 
 import java.sql.Date;
 import java.util.List;

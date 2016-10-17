@@ -1,7 +1,7 @@
 package com.instructure.service;
 
-import com.instructure.dto.SurveyQuestionsDto;
-import com.instructure.dto.UserDto;
+import com.instructure.service.dto.SurveyQuestionsDto;
+import com.instructure.service.dto.UserDto;
 
 import java.util.List;
 
