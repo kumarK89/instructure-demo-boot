@@ -12,6 +12,8 @@ import org.jooq.Record;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ import jooq.codgen.tables.records.InstrUsrSrvyQtnOptRecord;
 
 public class UserSurveyServiceImpl implements UserSurveyService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserSurveyServiceImpl.class);
+
     private final UserSurveyDao userSurveyDao;
 
     public UserSurveyServiceImpl(UserSurveyDao userSurveyDao) {
@@ -30,6 +34,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     public UserDto getUserSurveyDetails(int userId) {
+        LOGGER.info("In getUserSurveyDetails for userId-" + userId);
         UserDto userDto = null;
         List<Record6<Integer, String, Integer,
                 String, Date, Date>> result = userSurveyDao.getAssignedSurveysForUser(userId);
@@ -46,6 +51,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     @Override
     public void submitSurvey(Integer usrId, Integer srvyId,
                              List<SurveyQuestionsDto> surveyQuestionsDtos) {
+        LOGGER.info("In submitSurvey for userId-" + usrId + " srvyId-" + srvyId);
         Integer usrSrvyMpngId = userSurveyDao
                 .getUserSrvyMpngRcrd(usrId, srvyId).getUsrSrvyMpngId();
         List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords = new ArrayList<>();
@@ -68,6 +74,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     public List<SurveyQuestionsDto> getUserSurveyQustions(Integer usrId, Integer srvyId) {
+        LOGGER.info("In getUserSurveyQustions for userId-" + usrId + " srvyId-" + srvyId);
         final List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
         List<Record5<String, Integer, Integer, String, Boolean>> surveyQtnLst = userSurveyDao
                 .getUserSurveyQustions(usrId, srvyId);

@@ -1,4 +1,7 @@
+---
+# This default profile is used when running in local
 spring:
+  profiles: default
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/demodb
@@ -6,3 +9,40 @@ spring:
     password: admin
 server:
   port: 8090
+
+# The below profile is used for prod environment
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://devurl:5432/demodb
+    username: postgres
+    password: admin
+server:
+  port: 8091
+
+# The below profile is used for prod environment
+---
+spring:
+  profiles: test
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://testurl:5432/demodb
+    username: postgres
+    password: admin
+server:
+  port: 8092
+
+# The below profile is used for prod environment
+---
+spring:
+  profiles: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://produrl:5432/demodb
+    username: postgres
+    password: admin
+server:
+  port: 8093
+

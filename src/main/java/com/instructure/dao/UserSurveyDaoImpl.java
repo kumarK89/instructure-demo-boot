@@ -6,6 +6,8 @@ import org.jooq.Record1;
 import org.jooq.Record5;
 import org.jooq.Record6;
 import org.jooq.impl.DSL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
 import java.util.List;
@@ -29,6 +31,8 @@ import static jooq.codgen.tables.InstrUsrSrvyQtnOpt.INSTR_USR_SRVY_QTN_OPT;
 
 public class UserSurveyDaoImpl implements UserSurveyDao {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserSurveyDaoImpl.class);
+
     private final DSLContext dsl;
 
     public UserSurveyDaoImpl(DSLContext dsl) {
@@ -38,6 +42,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
     @Override
     public List<Record6<Integer, String, Integer, String, Date, Date>>
     getAssignedSurveysForUser(Integer userId) {
+        LOGGER.info("In getAssignedSurveysForUser for userId - " + userId);
         InstrUsrDtls usr = INSTR_USR_DTLS.as("usr");
         InstrSrvyDtls srvy = INSTR_SRVY_DTLS.as("srvy");
         InstrUsrSrvyMpng mpng = INSTR_USR_SRVY_MPNG.as("mpng");
@@ -51,6 +56,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
 
     @Override
     public void submitSurvey(List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords) {
+        LOGGER.info("In submitSurvey");
         dsl.transaction(t ->
                 usrSrvyQtnOptRecords.forEach(usrSrvyQtnOptRecord -> {
                     Record1<Long> seqVal = dsl.select(INSTR_USR_SRVY_QTN_OPT_SEQ
@@ -67,6 +73,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
 
     @Override
     public InstrUsrSrvyMpngRecord getUserSrvyMpngRcrd(Integer usrId, Integer srvyId) {
+        LOGGER.info("In getUserSrvyMpngRcrd for usrId - " + usrId + " srvyId - " + srvyId);
         return dsl.selectFrom(INSTR_USR_SRVY_MPNG).
                 where(INSTR_USR_SRVY_MPNG.USR_ID.eq(usrId)).
                 and(INSTR_USR_SRVY_MPNG.SRVY_ID.eq(srvyId)).fetchOne();
@@ -75,6 +82,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
     @Override
     public List<Record5<String, Integer, Integer, String, Boolean>>
     getUserSurveyQustions(Integer usrId, Integer srvyId) {
+        LOGGER.info("In getUserSurveyQustions for usrId - " + usrId + " srvyId - " + srvyId);
         InstrUsrDtls usr = INSTR_USR_DTLS.as("usr");
         InstrSrvyDtls srvy = INSTR_SRVY_DTLS.as("srvy");
         InstrSrvyQtns srvyqtns = INSTR_SRVY_QTNS.as("srvyqtns");
