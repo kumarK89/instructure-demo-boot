@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
-@ControllerAdvice(basePackages = {"com.instructure.controller"})
+@ControllerAdvice(basePackages = {"com.instructure.bridge.controller"})
 @RestController
 public class ExceptionControllerAdvice {
 
