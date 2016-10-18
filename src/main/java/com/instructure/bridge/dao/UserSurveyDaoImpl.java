@@ -42,7 +42,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
     @Override
     public List<Record6<Integer, String, Integer, String, Date, Date>>
     getAssignedSurveysForUser(Integer userId) {
-        LOGGER.info("In getAssignedSurveysForUser for userId - " + userId);
+        LOGGER.debug("In getAssignedSurveysForUser for userId - {0} ", userId);
         InstrUsrDtls usr = INSTR_USR_DTLS.as("usr");
         InstrSrvyDtls srvy = INSTR_SRVY_DTLS.as("srvy");
         InstrUsrSrvyMpng mpng = INSTR_USR_SRVY_MPNG.as("mpng");
@@ -56,7 +56,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
 
     @Override
     public void submitSurvey(List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords) {
-        LOGGER.info("In submitSurvey");
+        LOGGER.debug("In submitSurvey");
         dsl.transaction(t ->
                 usrSrvyQtnOptRecords.forEach(usrSrvyQtnOptRecord -> {
                     Record1<Long> seqVal = dsl.select(INSTR_USR_SRVY_QTN_OPT_SEQ
@@ -73,7 +73,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
 
     @Override
     public InstrUsrSrvyMpngRecord getUserSrvyMpngRcrd(Integer usrId, Integer srvyId) {
-        LOGGER.info("In getUserSrvyMpngRcrd for usrId - " + usrId + " srvyId - " + srvyId);
+        LOGGER.debug("In getUserSrvyMpngRcrd for usrId - {0} srvyId - {1}", usrId, srvyId);
         return dsl.selectFrom(INSTR_USR_SRVY_MPNG).
                 where(INSTR_USR_SRVY_MPNG.USR_ID.eq(usrId)).
                 and(INSTR_USR_SRVY_MPNG.SRVY_ID.eq(srvyId)).fetchOne();
@@ -82,7 +82,7 @@ public class UserSurveyDaoImpl implements UserSurveyDao {
     @Override
     public List<Record5<String, Integer, Integer, String, Boolean>>
     getUserSurveyQustions(Integer usrId, Integer srvyId) {
-        LOGGER.info("In getUserSurveyQustions for usrId - " + usrId + " srvyId - " + srvyId);
+        LOGGER.debug("In getUserSurveyQustions for usrId - {0} srvyId - {1}", usrId, srvyId);
         InstrUsrDtls usr = INSTR_USR_DTLS.as("usr");
         InstrSrvyDtls srvy = INSTR_SRVY_DTLS.as("srvy");
         InstrSrvyQtns srvyqtns = INSTR_SRVY_QTNS.as("srvyqtns");

@@ -3,10 +3,12 @@ package com.instructure.bridge.service;
 import com.instructure.bridge.dao.SurveyDao;
 import com.instructure.bridge.service.dto.SurveyQuestionOptionsDto;
 import com.instructure.bridge.service.dto.SurveyQuestionsDto;
+import com.instructure.bridge.service.exception.InvalidSurveyException;
 import com.instructure.bridge.utils.ModelMapperUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +32,12 @@ public class SurveyServiceImpl implements SurveyService {
      * @return List<SurveyQuestionsDto>
      */
     @Override
+    @Transactional
     public List<SurveyQuestionsDto> getSurveyQuestions(Integer srvyId) {
-        LOGGER.info(" In getSurveyQuestions for srvyId-" + srvyId);
+        LOGGER.debug(" In getSurveyQuestions for srvyId- {0} ", srvyId);
+        if (srvyId == null) {
+            throw new InvalidSurveyException("Survey Id is null");
+        }
         List<SurveyQuestionsDto> surveyQuestionsDtos = null;
         List<InstrSrvyQtnsRecord> srvyQtnsRecords = surveyDao.getSurveyQuestions(srvyId);
         if (!srvyQtnsRecords.isEmpty()) {
@@ -47,7 +53,7 @@ public class SurveyServiceImpl implements SurveyService {
 
 
     private List<SurveyQuestionOptionsDto> getSurveyQuestionOptionsDtos(Integer srvyQtnId) {
-        LOGGER.info(" In getSurveyQuestionOptionsDtos for srvyId-" + srvyQtnId);
+        LOGGER.debug(" In getSurveyQuestionOptionsDtos for srvyId- {0} ", srvyQtnId);
         List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = null;
         List<InstrSrvyQtnOptsRecord> srvyQtnOptsRecords = surveyDao.getSurveyOptions(srvyQtnId);
         if (!srvyQtnOptsRecords.isEmpty()) {

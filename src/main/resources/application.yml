@@ -8,7 +8,14 @@ spring:
     username: postgres
     password: admin
 server:
-  port: 8091
+  port: 8090
+logging:
+  file: ./logs/instructure-bridge.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    com.instructure.bridge: DEBUG
 
 # The below profile is used for prod environment
 ---
@@ -21,6 +28,11 @@ spring:
     password: admin
 server:
   port: 8091
+logging:
+  file: ./logs/instructure-bridge.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
 
 # The below profile is used for prod environment
 ---
@@ -33,7 +45,11 @@ spring:
     password: admin
 server:
   port: 8092
-
+logging:
+  file: ./logs/instructure-bridge.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
 # The below profile is used for prod environment
 ---
 spring:
@@ -45,4 +61,8 @@ spring:
     password: admin
 server:
   port: 8093
-
+logging:
+  file: ./logs/instructure-bridge.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"

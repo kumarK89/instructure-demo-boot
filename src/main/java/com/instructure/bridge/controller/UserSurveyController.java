@@ -36,9 +36,9 @@ public class UserSurveyController {
             , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto getUserSurveyDetails(@RequestParam(value = "usrId")
                                             final Integer usrId) {
-        LOGGER.info("In /getSurveyDetails GET Request");
+        LOGGER.info("In /getSurveyDetails GET Request for usrId - {0}", usrId);
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS);
+        responseDto.setStatus(Constants.SUCCESS.toString());
         responseDto.setData(userSurveyService.getUserSurveyDetails(usrId));
         return responseDto;
     }
@@ -49,10 +49,11 @@ public class UserSurveyController {
                                     @PathVariable(value = "srvyId") final Integer srvyId,
                                     @RequestBody final List<SurveyQuestionsDto>
                                             surveyQuestionsDtos) {
-        LOGGER.info("In /submitSurvey/{usrId}/{srvyId} POST Request");
+        LOGGER.info("In /submitSurvey/{usrId}/{srvyId} POST Request for userId - {0} srvyId - {1}"
+                , usrId, srvyId);
         userSurveyService.submitSurvey(usrId, srvyId, surveyQuestionsDtos);
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS);
+        responseDto.setStatus(Constants.SUCCESS.toString());
         return responseDto;
     }
 
@@ -61,9 +62,10 @@ public class UserSurveyController {
     public ResponseDto getUserSurveyQustions
             (@RequestParam(value = "srvyId") final Integer srvyId,
              @RequestParam(value = "usrId") final Integer usrId) {
-        LOGGER.info("In /getUserSurveyQustions GET Request");
+        LOGGER.info("In /getUserSurveyQustions GET Request for userId - {0} srvyId - {1} "
+                , usrId, srvyId);
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS);
+        responseDto.setStatus(Constants.SUCCESS.toString());
         responseDto.setData(ReplaceNull.withEmptyList(userSurveyService
                 .getUserSurveyQustions(usrId, srvyId)));
         return responseDto;

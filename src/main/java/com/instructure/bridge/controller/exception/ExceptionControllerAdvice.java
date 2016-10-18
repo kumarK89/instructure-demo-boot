@@ -2,6 +2,7 @@ package com.instructure.bridge.controller.exception;
 
 
 import com.instructure.bridge.controller.dto.ResponseDto;
+import com.instructure.bridge.service.exception.InvalidSurveyException;
 import com.instructure.bridge.utils.Constants;
 
 import org.slf4j.Logger;
@@ -18,10 +19,19 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseDto exceptionHandler(RuntimeException ex) {
-        LOGGER.error(ex.getLocalizedMessage());
+        LOGGER.error("RuntimeException Raised - ", ex);
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.FAILURE);
+        responseDto.setStatus(Constants.FAILURE.toString());
         responseDto.setErrors("Some Error occured While processing the request");
+        return new ResponseDto();
+    }
+
+    @ExceptionHandler(InvalidSurveyException.class)
+    public ResponseDto exceptionHandler(InvalidSurveyException ex) {
+        LOGGER.error("Invalid Survey Exception Raised ", ex);
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setStatus(Constants.FAILURE.toString());
+        responseDto.setErrors(ex.getLocalizedMessage());
         return new ResponseDto();
     }
 }

@@ -38,17 +38,16 @@ public class SurveyController {
      *
      * @param srvyId
      * @return application/json
-     *
      */
     @RequestMapping(value = "/getSurveyQustions", method = RequestMethod.GET
             , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto getSurveyQuestions
     (@RequestParam(value = "srvyId") final Integer srvyId) {
-        LOGGER.info("In /getSurveyQustions GET Request");
+        LOGGER.info("In /getSurveyQustions GET Request for srvyId - {0}", srvyId);
         List<SurveyQuestionsDto> surveyQuestionsDtos = ReplaceNull.withEmptyList(surveyService
                 .getSurveyQuestions(srvyId));
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS);
+        responseDto.setStatus(Constants.SUCCESS.toString());
         responseDto.setData(surveyQuestionsDtos);
         return responseDto;
     }

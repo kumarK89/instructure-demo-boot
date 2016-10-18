@@ -14,6 +14,7 @@ import org.jooq.Record6;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -33,8 +34,9 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     }
 
     @Override
+    @Transactional
     public UserDto getUserSurveyDetails(int userId) {
-        LOGGER.info("In getUserSurveyDetails for userId-" + userId);
+        LOGGER.debug("In getUserSurveyDetails for userId- {0}", userId);
         UserDto userDto = null;
         List<Record6<Integer, String, Integer,
                 String, Date, Date>> result = userSurveyDao.getAssignedSurveysForUser(userId);
@@ -49,9 +51,10 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     }
 
     @Override
+    @Transactional
     public void submitSurvey(Integer usrId, Integer srvyId,
                              List<SurveyQuestionsDto> surveyQuestionsDtos) {
-        LOGGER.info("In submitSurvey for userId-" + usrId + " srvyId-" + srvyId);
+        LOGGER.debug("In submitSurvey for userId- {0} srvyId- {1}", usrId, srvyId);
         Integer usrSrvyMpngId = userSurveyDao
                 .getUserSrvyMpngRcrd(usrId, srvyId).getUsrSrvyMpngId();
         List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords = new ArrayList<>();
@@ -74,7 +77,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     public List<SurveyQuestionsDto> getUserSurveyQustions(Integer usrId, Integer srvyId) {
-        LOGGER.info("In getUserSurveyQustions for userId-" + usrId + " srvyId-" + srvyId);
+        LOGGER.debug("In getUserSurveyQustions for userId- {0} srvyId- {1}", usrId, srvyId);
         final List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
         List<Record5<String, Integer, Integer, String, Boolean>> surveyQtnLst = userSurveyDao
                 .getUserSurveyQustions(usrId, srvyId);
