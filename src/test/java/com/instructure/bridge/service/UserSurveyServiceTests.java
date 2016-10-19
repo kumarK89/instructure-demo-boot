@@ -1,10 +1,6 @@
 package com.instructure.bridge.service;
 
 import com.instructure.bridge.dao.UserSurveyDao;
-import com.instructure.bridge.service.dto.SurveyDto;
-import com.instructure.bridge.service.dto.SurveyQuestionOptionsDto;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
-import com.instructure.bridge.service.dto.UserDto;
 
 import org.jooq.Configuration;
 import org.jooq.Converter;
@@ -799,23 +795,23 @@ public class UserSurveyServiceTests {
     public void testSubmitSurvey() {
 
         UserSurveyService userSurveyService = new UserSurveyServiceImpl(userSurveyDao);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
-        List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = new ArrayList<>();
-        SurveyQuestionOptionsDto surveyQuestionOptionsDto = new SurveyQuestionOptionsDto();
-        surveyQuestionOptionsDto.setOptionSelected(true);
-        surveyQuestionOptionsDto.setOptText("Test");
-        surveyQuestionOptionsDto.setSrvyQtnOptId(1);
-        surveyQuestionOptionsDtos.add(surveyQuestionOptionsDto);
-        SurveyQuestionsDto surveyQuestionsDto = new SurveyQuestionsDto();
-        surveyQuestionsDto.setQtnTxt("Test");
-        surveyQuestionsDto.setSrvyQtnId(1);
-        surveyQuestionsDto.setSurveyQuestionOptionsDtos(surveyQuestionOptionsDtos);
-        surveyQuestionsDtos.add(surveyQuestionsDto);
+        List<SurveyQuestions> surveyQuestionses = new ArrayList<>();
+        List<SurveyQuestionOptions> surveyQuestionOptionses = new ArrayList<>();
+        SurveyQuestionOptions surveyQuestionOptions = new SurveyQuestionOptions();
+        surveyQuestionOptions.setOptionSelected(true);
+        surveyQuestionOptions.setOptText("Test");
+        surveyQuestionOptions.setSrvyQtnOptId(1);
+        surveyQuestionOptionses.add(surveyQuestionOptions);
+        SurveyQuestions surveyQuestions = new SurveyQuestions();
+        surveyQuestions.setQtnTxt("Test");
+        surveyQuestions.setSrvyQtnId(1);
+        surveyQuestions.setSurveyQuestionOptionses(surveyQuestionOptionses);
+        surveyQuestionses.add(surveyQuestions);
         Mockito.when(userSurveyDao.getUserSrvyMpngRcrd(anyInt(), anyInt()))
                 .thenReturn(createInstrUsrSrvyMpngRecord());
         Mockito.doNothing().when(userSurveyDao).submitSurvey
                 (Mockito.anyListOf(InstrUsrSrvyQtnOptRecord.class));
-        userSurveyService.submitSurvey(anyInt(), anyInt(), surveyQuestionsDtos);
+        userSurveyService.submitSurvey(anyInt(), anyInt(), surveyQuestionses);
         Mockito.verify(userSurveyDao).getUserSrvyMpngRcrd(anyInt(), anyInt());
         Mockito.verify(userSurveyDao).submitSurvey
                 (Mockito.anyListOf(InstrUsrSrvyQtnOptRecord.class));
@@ -836,31 +832,31 @@ public class UserSurveyServiceTests {
      */
     @Test
     public void testGetUserSurveyQustions() {
-        SurveyDto surveyDto = createSurveyDtoMock();
-        UserDto userDto = createUserDtoMock();
+        Survey survey = createSurveyDtoMock();
+        User user = createUserDtoMock();
         UserSurveyService userSurveyService = new UserSurveyServiceImpl(userSurveyDao);
         Mockito.stub(userSurveyDao.getUserSurveyQustions(anyInt(), anyInt()))
-                .toReturn(createRecord5values(surveyDto.getSrvyId()));
+                .toReturn(createRecord5values(survey.getSrvyId()));
         //  .toReturn(Collections.EMPTY_LIST);
-        userSurveyService.getUserSurveyQustions(userDto.getUserId(), surveyDto.getSrvyId());
+        userSurveyService.getUserSurveyQustions(user.getUserId(), survey.getSrvyId());
         Mockito.verify(userSurveyDao).getUserSurveyQustions(anyInt(), anyInt());
     }
 
-    private SurveyDto createSurveyDtoMock() {
-        SurveyDto surveyDto = new SurveyDto();
-        surveyDto.setSrvyId(1);
-        surveyDto.setSrvyName("Test");
-        surveyDto.setSrvyEndDt(new Date(new java.util.Date().getTime()));
-        surveyDto.setSrvyStrtDt(new Date(new java.util.Date().getTime()));
+    private Survey createSurveyDtoMock() {
+        Survey survey = new Survey();
+        survey.setSrvyId(1);
+        survey.setSrvyName("Test");
+        survey.setSrvyEndDt(new Date(new java.util.Date().getTime()));
+        survey.setSrvyStrtDt(new Date(new java.util.Date().getTime()));
 
-        return surveyDto;
+        return survey;
     }
 
-    private UserDto createUserDtoMock() {
-        UserDto userDto = new UserDto();
-        userDto.setUserName("Test");
-        userDto.setUserId(1);
-        return userDto;
+    private User createUserDtoMock() {
+        User user = new User();
+        user.setUserName("Test");
+        user.setUserId(1);
+        return user;
     }
 
 

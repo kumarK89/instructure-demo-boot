@@ -1,6 +1,6 @@
-package com.instructure.bridge.service.dto;
+package com.instructure.bridge.service;
 
-public class SurveyQuestionOptionsDto {
+public class SurveyQuestionOptions {
 
     private Integer srvyQtnOptId;
     private String optText;

@@ -1,16 +1,16 @@
-package com.instructure.bridge.service.dto;
+package com.instructure.bridge.service;
 
 import java.sql.Date;
 import java.util.List;
 
-public class SurveyDto {
+public class Survey {
 
     private Integer srvyId;
     private String srvyName;
     private Date srvyStrtDt;
     private Date srvyEndDt;
 
-    private List<SurveyQuestionsDto> surveyQuestionsDtos;
+    private List<SurveyQuestions> surveyQuestionses;
 
     public Integer getSrvyId() {
         return srvyId;
@@ -44,11 +44,11 @@ public class SurveyDto {
         this.srvyEndDt = srvyEndDt;
     }
 
-    public List<SurveyQuestionsDto> getSurveyQuestionsDtos() {
-        return surveyQuestionsDtos;
+    public List<SurveyQuestions> getSurveyQuestionses() {
+        return surveyQuestionses;
     }
 
-    public void setSurveyQuestionsDtos(List<SurveyQuestionsDto> surveyQuestionsDtos) {
-        this.surveyQuestionsDtos = surveyQuestionsDtos;
+    public void setSurveyQuestionses(List<SurveyQuestions> surveyQuestionses) {
+        this.surveyQuestionses = surveyQuestionses;
     }
 }

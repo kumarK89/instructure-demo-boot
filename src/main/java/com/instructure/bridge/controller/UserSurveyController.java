@@ -1,8 +1,7 @@
 package com.instructure.bridge.controller;
 
+import com.instructure.bridge.service.SurveyQuestions;
 import com.instructure.bridge.utils.Constants;
-import com.instructure.bridge.controller.dto.ResponseDto;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
 import com.instructure.bridge.service.UserSurveyService;
 import com.instructure.bridge.utils.ReplaceNull;
 
@@ -21,7 +20,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "user")
-@CrossOrigin(origins = "http://localhost:3000")
 public class UserSurveyController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserSurveyController.class);
@@ -34,40 +32,40 @@ public class UserSurveyController {
 
     @RequestMapping(value = "/getSurveyDetails", method = RequestMethod.GET
             , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto getUserSurveyDetails(@RequestParam(value = "usrId")
-                                            final Integer usrId) {
+    public Response getUserSurveyDetails(@RequestParam(value = "usrId")
+                                         final Integer usrId) {
         LOGGER.info("In /getSurveyDetails GET Request for usrId - {}", usrId);
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS.toString());
-        responseDto.setData(userSurveyService.getUserSurveyDetails(usrId));
-        return responseDto;
+        Response response = new Response();
+        response.setStatus(Constants.SUCCESS.toString());
+        response.setData(userSurveyService.getUserSurveyDetails(usrId));
+        return response;
     }
 
     @RequestMapping(value = "/submitSurvey/{usrId}/{srvyId}", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto submitSurvey(@PathVariable(value = "usrId") final Integer usrId,
-                                    @PathVariable(value = "srvyId") final Integer srvyId,
-                                    @RequestBody final List<SurveyQuestionsDto>
-                                            surveyQuestionsDtos) {
+    public Response submitSurvey(@PathVariable(value = "usrId") final Integer usrId,
+                                 @PathVariable(value = "srvyId") final Integer srvyId,
+                                 @RequestBody final List<SurveyQuestions>
+                                         surveyQuestionses) {
         LOGGER.info("In /submitSurvey/{usrId}/{srvyId} POST Request for userId - {} srvyId - {}"
                 , usrId, srvyId);
-        userSurveyService.submitSurvey(usrId, srvyId, surveyQuestionsDtos);
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS.toString());
-        return responseDto;
+        userSurveyService.submitSurvey(usrId, srvyId, surveyQuestionses);
+        Response response = new Response();
+        response.setStatus(Constants.SUCCESS.toString());
+        return response;
     }
 
     @RequestMapping(value = "/getUserSurveyQustions", method = RequestMethod.GET
             , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto getUserSurveyQustions
+    public Response getUserSurveyQustions
             (@RequestParam(value = "srvyId") final Integer srvyId,
              @RequestParam(value = "usrId") final Integer usrId) {
         LOGGER.info("In /getUserSurveyQustions GET Request for userId - {} srvyId - {} "
                 , usrId, srvyId);
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS.toString());
-        responseDto.setData(ReplaceNull.withEmptyList(userSurveyService
+        Response response = new Response();
+        response.setStatus(Constants.SUCCESS.toString());
+        response.setData(ReplaceNull.withEmptyList(userSurveyService
                 .getUserSurveyQustions(usrId, srvyId)));
-        return responseDto;
+        return response;
     }
 }

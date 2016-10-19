@@ -1,10 +1,6 @@
 package com.instructure.bridge.service;
 
 import com.instructure.bridge.dao.UserSurveyDao;
-import com.instructure.bridge.service.dto.SurveyDto;
-import com.instructure.bridge.service.dto.SurveyQuestionOptionsDto;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
-import com.instructure.bridge.service.dto.UserDto;
 import com.instructure.bridge.utils.ModelMapperUtil;
 import com.instructure.bridge.utils.ReplaceNull;
 
@@ -35,38 +31,38 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     @Transactional
-    public UserDto getUserSurveyDetails(int userId) {
+    public User getUserSurveyDetails(int userId) {
         LOGGER.debug("In getUserSurveyDetails for userId- {}", userId);
-        UserDto userDto = null;
+        User user = null;
         List<Record6<Integer, String, Integer,
                 String, Date, Date>> result = userSurveyDao.getAssignedSurveysForUser(userId);
         if (!result.isEmpty()) {
             ModelMapper modelMapper = ModelMapperUtil.MODEL_MAPPER;
-            userDto = modelMapper.map(result.get(0), UserDto.class);
-            userDto.setSurveyDtos(result.stream()
+            user = modelMapper.map(result.get(0), User.class);
+            user.setSurveys(result.stream()
                     .map(record -> getSurveyDto(record, modelMapper))
                     .collect(Collectors.toList()));
         }
-        return userDto;
+        return user;
     }
 
     @Override
     @Transactional
     public void submitSurvey(Integer usrId, Integer srvyId,
-                             List<SurveyQuestionsDto> surveyQuestionsDtos) {
+                             List<SurveyQuestions> surveyQuestionses) {
         LOGGER.debug("In submitSurvey for userId- {} srvyId- {}", usrId, srvyId);
         Integer usrSrvyMpngId = userSurveyDao
                 .getUserSrvyMpngRcrd(usrId, srvyId).getUsrSrvyMpngId();
         List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords = new ArrayList<>();
-        surveyQuestionsDtos.forEach(surveyQuestionsDto ->
-                surveyQuestionsDto.getSurveyQuestionOptionsDtos().
-                        forEach(surveyQuestionOptionsDto -> {
+        surveyQuestionses.forEach(surveyQuestionsDto ->
+                surveyQuestionsDto.getSurveyQuestionOptionses().
+                        forEach(surveyQuestionOptions -> {
                             InstrUsrSrvyQtnOptRecord usrSrvyQtnOptRecord =
                                     new InstrUsrSrvyQtnOptRecord();
                             usrSrvyQtnOptRecord.setSrvyQtnId(
                                     surveyQuestionsDto.getSrvyQtnId());
                             usrSrvyQtnOptRecord.setSrvyQtnOptId(
-                                    surveyQuestionOptionsDto.getSrvyQtnOptId());
+                                    surveyQuestionOptions.getSrvyQtnOptId());
                             usrSrvyQtnOptRecord.setUsrSrvyMpngId(usrSrvyMpngId);
                             usrSrvyQtnOptRecords.add(usrSrvyQtnOptRecord);
                         })
@@ -76,47 +72,47 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     }
 
     @Override
-    public List<SurveyQuestionsDto> getUserSurveyQustions(Integer usrId, Integer srvyId) {
+    public List<SurveyQuestions> getUserSurveyQustions(Integer usrId, Integer srvyId) {
         LOGGER.debug("In getUserSurveyQustions for userId- {} srvyId- {}", usrId, srvyId);
-        final List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
+        final List<SurveyQuestions> surveyQuestionses = new ArrayList<>();
         List<Record5<String, Integer, Integer, String, Boolean>> surveyQtnLst = userSurveyDao
                 .getUserSurveyQustions(usrId, srvyId);
         if (!surveyQtnLst.isEmpty()) {
             int indx = 0;
-            SurveyQuestionsDto surveyQuestionsDto = null;
-            List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = null;
+            SurveyQuestions surveyQuestions = null;
+            List<SurveyQuestionOptions> surveyQuestionOptionses = null;
             for (Record5<String, Integer, Integer, String, Boolean> record : surveyQtnLst) {
                 if (indx == 0 ||
-                        (surveyQuestionsDto != null &&
-                                !record.value2().equals(surveyQuestionsDto.getSrvyQtnId()))) {
-                    surveyQuestionsDto = new SurveyQuestionsDto();
-                    surveyQuestionsDto.setQtnTxt(record.value1());
-                    surveyQuestionsDto.setSrvyQtnId(record.value2());
-                    surveyQuestionOptionsDtos = new ArrayList<>();
-                    surveyQuestionOptionsDtos.add(setSurveyQuestionOptionsDto(record));
-                    surveyQuestionsDto.setSurveyQuestionOptionsDtos(surveyQuestionOptionsDtos);
-                    surveyQuestionsDtos.add(surveyQuestionsDto);
+                        (surveyQuestions != null &&
+                                !record.value2().equals(surveyQuestions.getSrvyQtnId()))) {
+                    surveyQuestions = new SurveyQuestions();
+                    surveyQuestions.setQtnTxt(record.value1());
+                    surveyQuestions.setSrvyQtnId(record.value2());
+                    surveyQuestionOptionses = new ArrayList<>();
+                    surveyQuestionOptionses.add(setSurveyQuestionOptionsDto(record));
+                    surveyQuestions.setSurveyQuestionOptionses(surveyQuestionOptionses);
+                    surveyQuestionses.add(surveyQuestions);
                 } else {
-                    surveyQuestionOptionsDtos = ReplaceNull
-                            .withEmptyList(surveyQuestionOptionsDtos);
-                    surveyQuestionOptionsDtos.add(setSurveyQuestionOptionsDto(record));
+                    surveyQuestionOptionses = ReplaceNull
+                            .withEmptyList(surveyQuestionOptionses);
+                    surveyQuestionOptionses.add(setSurveyQuestionOptionsDto(record));
                 }
                 indx++;
             }
         }
-        return surveyQuestionsDtos;
+        return surveyQuestionses;
     }
 
-    private SurveyQuestionOptionsDto setSurveyQuestionOptionsDto
+    private SurveyQuestionOptions setSurveyQuestionOptionsDto
             (Record5<String, Integer, Integer, String, Boolean> record) {
-        SurveyQuestionOptionsDto surveyQuestionOptionsDto = new SurveyQuestionOptionsDto();
-        surveyQuestionOptionsDto.setSrvyQtnOptId(record.value3());
-        surveyQuestionOptionsDto.setOptText(record.value4());
-        surveyQuestionOptionsDto.setOptionSelected(record.value5());
-        return surveyQuestionOptionsDto;
+        SurveyQuestionOptions surveyQuestionOptions = new SurveyQuestionOptions();
+        surveyQuestionOptions.setSrvyQtnOptId(record.value3());
+        surveyQuestionOptions.setOptText(record.value4());
+        surveyQuestionOptions.setOptionSelected(record.value5());
+        return surveyQuestionOptions;
     }
 
-    private SurveyDto getSurveyDto(Record record, ModelMapper modelMapper) {
-        return modelMapper.map(record, SurveyDto.class);
+    private Survey getSurveyDto(Record record, ModelMapper modelMapper) {
+        return modelMapper.map(record, Survey.class);
     }
 }

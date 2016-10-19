@@ -1,6 +1,6 @@
-package com.instructure.bridge.controller.dto;
+package com.instructure.bridge.controller;
 
-public class ResponseDto {
+public class Response {
 
     private String status;
 

@@ -1,8 +1,8 @@
 package com.instructure.bridge.controller;
 
+import com.instructure.bridge.service.SurveyQuestions;
 import com.instructure.bridge.service.UserSurveyService;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
-import com.instructure.bridge.service.dto.UserDto;
+import com.instructure.bridge.service.User;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,9 +59,9 @@ public class UserSurveyControllerTests {
 
     @Test
     public void testGetUserSurveyDetails() throws Exception {
-        UserDto userDto = new UserDto();
-        userDto.setUserId(1);
-        given(this.userSurveyService.getUserSurveyDetails(Mockito.anyInt())).willReturn(userDto);
+        User user = new User();
+        user.setUserId(1);
+        given(this.userSurveyService.getUserSurveyDetails(Mockito.anyInt())).willReturn(user);
         this.mockMvc.perform(get("/user/getSurveyDetails?usrId=1")
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -70,11 +70,11 @@ public class UserSurveyControllerTests {
 
     @Test
     public void testGetUserSurveyQustions() throws Exception {
-        List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
-        SurveyQuestionsDto surveyQuestionsDto = new SurveyQuestionsDto();
-        surveyQuestionsDtos.add(surveyQuestionsDto);
+        List<SurveyQuestions> surveyQuestionses = new ArrayList<>();
+        SurveyQuestions surveyQuestions = new SurveyQuestions();
+        surveyQuestionses.add(surveyQuestions);
         given(this.userSurveyService.getUserSurveyQustions(Mockito.anyInt(), Mockito.anyInt()))
-                .willReturn(surveyQuestionsDtos);
+                .willReturn(surveyQuestionses);
 
         this.mockMvc.perform(get("/user/getUserSurveyQustions?usrId=1&srvyId=1")
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -85,12 +85,12 @@ public class UserSurveyControllerTests {
     @Test
     public void testSubmitSurvey() throws Exception {
         Mockito.doNothing().when(userSurveyService)
-                .submitSurvey(Mockito.anyInt(), anyInt(), anyListOf(SurveyQuestionsDto.class));
-        List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
-        SurveyQuestionsDto surveyQuestionsDto = new SurveyQuestionsDto();
-        surveyQuestionsDtos.add(surveyQuestionsDto);
+                .submitSurvey(Mockito.anyInt(), anyInt(), anyListOf(SurveyQuestions.class));
+        List<SurveyQuestions> surveyQuestionses = new ArrayList<>();
+        SurveyQuestions surveyQuestions = new SurveyQuestions();
+        surveyQuestionses.add(surveyQuestions);
         this.mockMvc.perform(post("/user/submitSurvey/1/1")
-                .content(json(surveyQuestionsDtos))
+                .content(json(surveyQuestionses))
                 .contentType(contentType))
                 .andExpect(status().isOk());
     }

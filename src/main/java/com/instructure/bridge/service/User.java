@@ -1,13 +1,13 @@
-package com.instructure.bridge.service.dto;
+package com.instructure.bridge.service;
 
 import java.util.List;
 
-public class UserDto {
+public class User {
 
     private Integer userId;
     private String userName;
 
-    private List<SurveyDto> surveyDtos;
+    private List<Survey> surveys;
 
     public Integer getUserId() {
         return userId;
@@ -25,11 +25,11 @@ public class UserDto {
         this.userName = userName;
     }
 
-    public List<SurveyDto> getSurveyDtos() {
-        return surveyDtos;
+    public List<Survey> getSurveys() {
+        return surveys;
     }
 
-    public void setSurveyDtos(List<SurveyDto> surveyDtos) {
-        this.surveyDtos = surveyDtos;
+    public void setSurveys(List<Survey> surveys) {
+        this.surveys = surveys;
     }
 }

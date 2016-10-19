@@ -1,8 +1,7 @@
 package com.instructure.bridge.controller;
 
-import com.instructure.bridge.controller.dto.ResponseDto;
 import com.instructure.bridge.service.SurveyService;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
+import com.instructure.bridge.service.SurveyQuestions;
 import com.instructure.bridge.utils.Constants;
 import com.instructure.bridge.utils.ReplaceNull;
 
@@ -22,7 +21,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "survey")
-@CrossOrigin(origins = "http://localhost:3000")
 public class SurveyController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SurveyController.class);
@@ -41,14 +39,14 @@ public class SurveyController {
      */
     @RequestMapping(value = "/getSurveyQustions", method = RequestMethod.GET
             , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseDto getSurveyQuestions
+    public Response getSurveyQuestions
     (@RequestParam(value = "srvyId") final Integer srvyId) {
         LOGGER.info("In /getSurveyQustions GET Request for srvyId - {}", srvyId);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = ReplaceNull.withEmptyList(surveyService
+        List<SurveyQuestions> surveyQuestionses = ReplaceNull.withEmptyList(surveyService
                 .getSurveyQuestions(srvyId));
-        ResponseDto responseDto = new ResponseDto();
-        responseDto.setStatus(Constants.SUCCESS.toString());
-        responseDto.setData(surveyQuestionsDtos);
-        return responseDto;
+        Response response = new Response();
+        response.setStatus(Constants.SUCCESS.toString());
+        response.setData(surveyQuestionses);
+        return response;
     }
 }

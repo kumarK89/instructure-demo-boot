@@ -1,7 +1,6 @@
 package com.instructure.bridge.service;
 
 import com.instructure.bridge.dao.SurveyDao;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
 import com.instructure.bridge.service.exception.InvalidSurveyException;
 
 import jooq.codgen.tables.records.InstrSrvyQtnOptsRecord;
@@ -82,9 +81,9 @@ public class SurveyServiceTests {
         Mockito.stub(surveyDao.getSurveyOptions(anyInt())).toReturn(srvyQtnsOptnRecords);
 
         SurveyService service = new SurveyServiceImpl(surveyDao);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = service.getSurveyQuestions(1);
+        List<SurveyQuestions> surveyQuestionses = service.getSurveyQuestions(1);
         Mockito.verify(surveyDao).getSurveyQuestions(anyInt());
-        Assert.assertEquals(2, surveyQuestionsDtos.size());
+        Assert.assertEquals(2, surveyQuestionses.size());
     }
 
     /**
@@ -103,9 +102,9 @@ public class SurveyServiceTests {
         Mockito.stub(surveyDao.getSurveyOptions(anyInt())).toReturn(srvyQtnsOptnRecords);
 
         SurveyService service = new SurveyServiceImpl(surveyDao);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = service.getSurveyQuestions(1);
+        List<SurveyQuestions> surveyQuestionses = service.getSurveyQuestions(1);
         Mockito.verify(surveyDao).getSurveyQuestions(anyInt());
-        Assert.assertEquals(2, surveyQuestionsDtos.size());
+        Assert.assertEquals(2, surveyQuestionses.size());
     }
 
     /**
@@ -124,9 +123,9 @@ public class SurveyServiceTests {
         Mockito.stub(surveyDao.getSurveyOptions(anyInt())).toReturn(srvyQtnsOptnRecords);
 
         SurveyService service = new SurveyServiceImpl(surveyDao);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = service.getSurveyQuestions(1);
+        List<SurveyQuestions> surveyQuestionses = service.getSurveyQuestions(1);
         Mockito.verify(surveyDao).getSurveyQuestions(anyInt());
-        Assert.assertNull(surveyQuestionsDtos);
+        Assert.assertNull(surveyQuestionses);
     }
 
     /**
@@ -135,6 +134,6 @@ public class SurveyServiceTests {
     @Test(expected = InvalidSurveyException.class)
     public void testGetSurveyQuestionsForNull() {
         SurveyService service = new SurveyServiceImpl(surveyDao);
-        List<SurveyQuestionsDto> surveyQuestionsDtos = service.getSurveyQuestions(null);
+        List<SurveyQuestions> surveyQuestionses = service.getSurveyQuestions(null);
     }
 }

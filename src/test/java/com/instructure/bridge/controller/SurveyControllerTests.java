@@ -1,6 +1,6 @@
 package com.instructure.bridge.controller;
 
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
+import com.instructure.bridge.service.SurveyQuestions;
 import com.instructure.bridge.service.SurveyService;
 
 import org.junit.Test;
@@ -32,11 +32,11 @@ public class SurveyControllerTests {
 
     @Test
     public void testGetSurveyQuestions() throws Exception {
-        List<SurveyQuestionsDto> surveyQuestionsDtoList = new ArrayList<>();
-        SurveyQuestionsDto surveyQuestionsDto = new SurveyQuestionsDto();
-        surveyQuestionsDtoList.add(surveyQuestionsDto);
+        List<SurveyQuestions> surveyQuestionsList = new ArrayList<>();
+        SurveyQuestions surveyQuestions = new SurveyQuestions();
+        surveyQuestionsList.add(surveyQuestions);
         given(this.surveyService.getSurveyQuestions(Mockito.anyInt()))
-                .willReturn(surveyQuestionsDtoList);
+                .willReturn(surveyQuestionsList);
         this.mockMvc.perform(get("/survey/getSurveyQustions?srvyId=1")
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());

@@ -1,8 +1,6 @@
 package com.instructure.bridge.service;
 
 import com.instructure.bridge.dao.SurveyDao;
-import com.instructure.bridge.service.dto.SurveyQuestionOptionsDto;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
 import com.instructure.bridge.service.exception.InvalidSurveyException;
 import com.instructure.bridge.utils.ModelMapperUtil;
 
@@ -29,38 +27,38 @@ public class SurveyServiceImpl implements SurveyService {
     /**
      * Get the Survey Questions from INSTR_SRVY_QTNS table and return the list.
      *
-     * @return List<SurveyQuestionsDto>
+     * @return List<SurveyQuestions>
      */
     @Override
     @Transactional
-    public List<SurveyQuestionsDto> getSurveyQuestions(Integer srvyId) {
+    public List<SurveyQuestions> getSurveyQuestions(Integer srvyId) {
         LOGGER.debug(" In getSurveyQuestions for srvyId- {} ", srvyId);
         if (srvyId == null) {
             throw new InvalidSurveyException("Survey Id is null");
         }
-        List<SurveyQuestionsDto> surveyQuestionsDtos = null;
+        List<SurveyQuestions> surveyQuestionses = null;
         List<InstrSrvyQtnsRecord> srvyQtnsRecords = surveyDao.getSurveyQuestions(srvyId);
         if (!srvyQtnsRecords.isEmpty()) {
-            surveyQuestionsDtos = srvyQtnsRecords.stream()
+            surveyQuestionses = srvyQtnsRecords.stream()
                     .map(srvyQtnsRecord -> ModelMapperUtil.MODEL_MAPPER.map(srvyQtnsRecord
-                            , SurveyQuestionsDto.class)).collect(Collectors.toList());
-            surveyQuestionsDtos.forEach(surveyQuestionsDto ->
-                    surveyQuestionsDto.setSurveyQuestionOptionsDtos(
+                            , SurveyQuestions.class)).collect(Collectors.toList());
+            surveyQuestionses.forEach(surveyQuestionsDto ->
+                    surveyQuestionsDto.setSurveyQuestionOptionses(
                             getSurveyQuestionOptionsDtos(surveyQuestionsDto.getSrvyQtnId())));
         }
-        return surveyQuestionsDtos;
+        return surveyQuestionses;
     }
 
 
-    private List<SurveyQuestionOptionsDto> getSurveyQuestionOptionsDtos(Integer srvyQtnId) {
-        LOGGER.debug(" In getSurveyQuestionOptionsDtos for srvyId- {} ", srvyQtnId);
-        List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = null;
+    private List<SurveyQuestionOptions> getSurveyQuestionOptionsDtos(Integer srvyQtnId) {
+        LOGGER.debug(" In getSurveyQuestionOptionses for srvyId- {} ", srvyQtnId);
+        List<SurveyQuestionOptions> surveyQuestionOptionses = null;
         List<InstrSrvyQtnOptsRecord> srvyQtnOptsRecords = surveyDao.getSurveyOptions(srvyQtnId);
         if (!srvyQtnOptsRecords.isEmpty()) {
-            surveyQuestionOptionsDtos = srvyQtnOptsRecords.stream()
+            surveyQuestionOptionses = srvyQtnOptsRecords.stream()
                     .map(srvyQtnOptsRecord -> ModelMapperUtil.MODEL_MAPPER.map(srvyQtnOptsRecord
-                            , SurveyQuestionOptionsDto.class)).collect(Collectors.toList());
+                            , SurveyQuestionOptions.class)).collect(Collectors.toList());
         }
-        return surveyQuestionOptionsDtos;
+        return surveyQuestionOptionses;
     }
 }

@@ -1,15 +1,12 @@
 package com.instructure.bridge.service;
 
-import com.instructure.bridge.service.dto.UserDto;
-import com.instructure.bridge.service.dto.SurveyQuestionsDto;
-
 import java.util.List;
 
 public interface UserSurveyService {
 
-    UserDto getUserSurveyDetails(int userId);
+    User getUserSurveyDetails(int userId);
 
-    void submitSurvey(Integer usrId, Integer srvyId, List<SurveyQuestionsDto> surveyQuestionsDtos);
+    void submitSurvey(Integer usrId, Integer srvyId, List<SurveyQuestions> surveyQuestionses);
 
-    List<SurveyQuestionsDto> getUserSurveyQustions(Integer usrId, Integer srvyId);
+    List<SurveyQuestions> getUserSurveyQustions(Integer usrId, Integer srvyId);
 }
