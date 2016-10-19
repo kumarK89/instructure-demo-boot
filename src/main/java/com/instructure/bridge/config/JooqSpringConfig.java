@@ -1,6 +1,6 @@
 package com.instructure.bridge.config;
 
-import com.instructure.bridge.dao.ExceptionTranslator;
+import com.instructure.bridge.dao.JooqExecuteListener;
 import com.instructure.bridge.transaction.JooqSpringTransactionProvider;
 
 import org.jooq.ConnectionProvider;
@@ -45,14 +45,14 @@ public class JooqSpringConfig {
     }
 
     @Bean
-    public ExceptionTranslator exceptionTranslator() {
-        return new ExceptionTranslator();
+    public JooqExecuteListener jooqExecuteListener() {
+        return new JooqExecuteListener();
     }
 
     @Bean
     public ExecuteListenerProvider executeListenerProvider(
-            final ExceptionTranslator exceptionTranslator) {
-        return new DefaultExecuteListenerProvider(exceptionTranslator);
+            final JooqExecuteListener jooqExecuteListener) {
+        return new DefaultExecuteListenerProvider(jooqExecuteListener);
 
     }
 

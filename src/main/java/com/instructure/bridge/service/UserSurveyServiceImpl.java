@@ -36,7 +36,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     @Override
     @Transactional
     public UserDto getUserSurveyDetails(int userId) {
-        LOGGER.debug("In getUserSurveyDetails for userId- {0}", userId);
+        LOGGER.debug("In getUserSurveyDetails for userId- {}", userId);
         UserDto userDto = null;
         List<Record6<Integer, String, Integer,
                 String, Date, Date>> result = userSurveyDao.getAssignedSurveysForUser(userId);
@@ -54,7 +54,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
     @Transactional
     public void submitSurvey(Integer usrId, Integer srvyId,
                              List<SurveyQuestionsDto> surveyQuestionsDtos) {
-        LOGGER.debug("In submitSurvey for userId- {0} srvyId- {1}", usrId, srvyId);
+        LOGGER.debug("In submitSurvey for userId- {} srvyId- {}", usrId, srvyId);
         Integer usrSrvyMpngId = userSurveyDao
                 .getUserSrvyMpngRcrd(usrId, srvyId).getUsrSrvyMpngId();
         List<InstrUsrSrvyQtnOptRecord> usrSrvyQtnOptRecords = new ArrayList<>();
@@ -77,7 +77,7 @@ public class UserSurveyServiceImpl implements UserSurveyService {
 
     @Override
     public List<SurveyQuestionsDto> getUserSurveyQustions(Integer usrId, Integer srvyId) {
-        LOGGER.debug("In getUserSurveyQustions for userId- {0} srvyId- {1}", usrId, srvyId);
+        LOGGER.debug("In getUserSurveyQustions for userId- {} srvyId- {}", usrId, srvyId);
         final List<SurveyQuestionsDto> surveyQuestionsDtos = new ArrayList<>();
         List<Record5<String, Integer, Integer, String, Boolean>> surveyQtnLst = userSurveyDao
                 .getUserSurveyQustions(usrId, srvyId);

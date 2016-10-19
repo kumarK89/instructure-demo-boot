@@ -34,7 +34,7 @@ public class SurveyServiceImpl implements SurveyService {
     @Override
     @Transactional
     public List<SurveyQuestionsDto> getSurveyQuestions(Integer srvyId) {
-        LOGGER.debug(" In getSurveyQuestions for srvyId- {0} ", srvyId);
+        LOGGER.debug(" In getSurveyQuestions for srvyId- {} ", srvyId);
         if (srvyId == null) {
             throw new InvalidSurveyException("Survey Id is null");
         }
@@ -53,7 +53,7 @@ public class SurveyServiceImpl implements SurveyService {
 
 
     private List<SurveyQuestionOptionsDto> getSurveyQuestionOptionsDtos(Integer srvyQtnId) {
-        LOGGER.debug(" In getSurveyQuestionOptionsDtos for srvyId- {0} ", srvyQtnId);
+        LOGGER.debug(" In getSurveyQuestionOptionsDtos for srvyId- {} ", srvyQtnId);
         List<SurveyQuestionOptionsDto> surveyQuestionOptionsDtos = null;
         List<InstrSrvyQtnOptsRecord> srvyQtnOptsRecords = surveyDao.getSurveyOptions(srvyQtnId);
         if (!srvyQtnOptsRecords.isEmpty()) {

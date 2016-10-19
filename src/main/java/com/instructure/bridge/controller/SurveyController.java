@@ -43,7 +43,7 @@ public class SurveyController {
             , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseDto getSurveyQuestions
     (@RequestParam(value = "srvyId") final Integer srvyId) {
-        LOGGER.info("In /getSurveyQustions GET Request for srvyId - {0}", srvyId);
+        LOGGER.info("In /getSurveyQustions GET Request for srvyId - {}", srvyId);
         List<SurveyQuestionsDto> surveyQuestionsDtos = ReplaceNull.withEmptyList(surveyService
                 .getSurveyQuestions(srvyId));
         ResponseDto responseDto = new ResponseDto();
