@@ -6,6 +6,7 @@ import com.instructure.bridge.controller.dto.ResponseDto;
 import com.instructure.bridge.controller.exception.ExceptionControllerAdvice;
 import com.instructure.bridge.service.SurveyService;
 import com.instructure.bridge.service.dto.SurveyQuestionsDto;
+import com.instructure.bridge.service.exception.InvalidSurveyException;
 import com.instructure.bridge.utils.Constants;
 
 import org.junit.Before;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,6 +52,21 @@ public class ExceptionControllerAdviceTests {
 
         given(this.surveyService.getSurveyQuestions(Mockito.anyInt()))
                 .willThrow(new RuntimeException());
+        mockMvc.perform(get("/survey/getSurveyQustions?srvyId=1"))
+                .andExpect(new ResultMatcher() {
+                    @Override
+                    public void match(MvcResult result) throws Exception {
+                        result.getResponse().getContentAsString().contains("global_error_test");
+                    }
+                })
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testHandleExceptionForInvalidSurveyException() throws Exception {
+
+        given(this.surveyService.getSurveyQuestions(Mockito.anyInt()))
+                .willThrow(new InvalidSurveyException("Invalid Survey"));
         mockMvc.perform(get("/survey/getSurveyQustions?srvyId=1"))
                 .andExpect(new ResultMatcher() {
                     @Override

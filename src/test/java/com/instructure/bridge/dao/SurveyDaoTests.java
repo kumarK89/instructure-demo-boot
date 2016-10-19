@@ -46,6 +46,12 @@ public class SurveyDaoTests {
     }
 
     @Test
+    public void test1GetSurveyQuestionsTestForNull() {
+        List<InstrSrvyQtnsRecord> srvyQtns = surveyDao.getSurveyQuestions(null);
+        Assert.assertEquals(1, srvyQtns.size());
+    }
+
+    @Test
     public void test2GetSurveyOptionsTest() {
         List<InstrSrvyQtnOptsRecord> srvyQtnOptn = surveyDao.getSurveyOptions(1);
         Assert.assertEquals(1, srvyQtnOptn.size());

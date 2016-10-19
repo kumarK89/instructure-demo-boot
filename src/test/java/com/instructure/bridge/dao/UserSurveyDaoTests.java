@@ -16,6 +16,7 @@ import org.jooq.tools.jdbc.MockResult;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -49,9 +50,18 @@ public class UserSurveyDaoTests {
 
     @Test
     public void test1GetAssignedSurveysForUserTest() {
-        List<Record6<Integer, String, Integer, String, Date, Date>> surveysAssignedForUser = userSurveyDao.getAssignedSurveysForUser(1);
+        List<Record6<Integer, String, Integer, String, Date, Date>> surveysAssignedForUser
+                = userSurveyDao.getAssignedSurveysForUser(1);
         Assert.assertEquals(1, surveysAssignedForUser.size());
     }
+
+    @Test
+    public void test1GetAssignedSurveysForUserForNull() {
+        List<Record6<Integer, String, Integer, String, Date, Date>> surveysAssignedForUser
+                = userSurveyDao.getAssignedSurveysForUser(null);
+        Assert.assertEquals(1, surveysAssignedForUser.size());
+    }
+
 
     @Test
     public void test2SubmitSurveyWithUserSurveyQustnOptionsTest() {
@@ -71,7 +81,15 @@ public class UserSurveyDaoTests {
 
     @Test
     public void test4GetUserSurveyQustions() {
-        List<Record5<String, Integer, Integer, String, Boolean>> userSurveyQuestns = userSurveyDao.getUserSurveyQustions(1, 1);
+        List<Record5<String, Integer, Integer, String, Boolean>> userSurveyQuestns
+                = userSurveyDao.getUserSurveyQustions(1, 1);
+        Assert.assertEquals(1, userSurveyQuestns.size());
+    }
+
+    @Test
+    public void test4GetUserSurveyQustionsForNull() {
+        List<Record5<String, Integer, Integer, String, Boolean>> userSurveyQuestns
+                = userSurveyDao.getUserSurveyQustions(null, null);
         Assert.assertEquals(1, userSurveyQuestns.size());
     }
 
