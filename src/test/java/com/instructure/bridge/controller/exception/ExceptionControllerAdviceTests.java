@@ -1,9 +1,9 @@
 package com.instructure.bridge.controller.exception;
 
 
-import com.instructure.bridge.controller.SurveyController;
-import com.instructure.bridge.service.SurveyService;
-import com.instructure.bridge.service.exception.InvalidSurveyException;
+import com.instructure.bridge.survey.controller.SurveyController;
+import com.instructure.bridge.survey.service.api.SurveyService;
+import com.instructure.bridge.survey.service.exception.InvalidSurveyException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
